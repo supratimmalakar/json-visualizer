@@ -43,7 +43,7 @@ const HeaderContainer = styled.div`
   }
 `;
 
-function Header({setAllowDrag, allowDrag, collapse, setCollapse}) {
+function Header({ collapse, setCollapse}) {
   const {themeMode, toggleThemeMode} = useTheme();
   return (
     <HeaderContainer themeMode={themeMode}>
@@ -51,13 +51,6 @@ function Header({setAllowDrag, allowDrag, collapse, setCollapse}) {
         JSON <span className='heading-sub'>Visualizer</span>
       </span>
       <div className="button-container">
-        {/* <span className='switch-label'>Allow Drag</span> */}
-        <Tooltip title="Allow node dragging?">
-            <Switch
-              checked={allowDrag}
-              onChange={() => setAllowDrag((prev) => !prev)}
-            />
-        </Tooltip>
         <IconButton onClick={() => toggleThemeMode()}>
           {themeMode === "dark" ? (
             <LightModeOutlined style={{ color: color.icon[themeMode] }} />

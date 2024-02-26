@@ -53,6 +53,13 @@ const NodeContainer = styled.div`
   .primitive-value {
     padding: 5px 10px;
   }
+  .prim {
+    max-width: 250px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    justify-self: flex-end;
+  }
   .heading {
     font-weight: 600;
     font-size: 28px;
@@ -119,7 +126,7 @@ function ObjectNode({ data, id }) {
       <NodeContainer themeMode={themeMode}>
         <span className="heading">
           <span>{key}</span>
-          {!isObject && renderValue(jsonObj)}
+          <span className="prim">{!isObject && renderValue(jsonObj)}</span>
         </span>
 
         {/* {isObject ? (

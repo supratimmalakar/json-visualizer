@@ -16,7 +16,6 @@ const Container = styled.div`
 `;
 
 function App() {
-  const [allowDrag, setAllowDrag] = useState(false);
   const [collapse, setCollapse] = useState(false);
   const [jsonObj, setJsonObj] = useState({
     kind: "youtube#searchListResponse",
@@ -214,15 +213,12 @@ function App() {
         <Header
           collapse={collapse}
           setCollapse={setCollapse}
-          allowDrag={allowDrag}
-          setAllowDrag={setAllowDrag}
           jsonObj={jsonObj}
           setJsonObj={setJsonObj}
         />
         <div className="app-body">
           <Visualizer
             collapse={collapse}
-            allowDrag={allowDrag}
             jsonObj={jsonObj}
             setJsonObj={setJsonObj}
           />

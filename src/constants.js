@@ -5,7 +5,7 @@ export const color = {
     },
     editorBg: {
         dark: '#1C1B1F',
-        light: ''
+        light: '#fff'
     },
     nodeBg: {
         dark: '#1e1e1e',
@@ -45,6 +45,10 @@ export const color = {
     edge: {
         dark : '#ffffff',
         light: '#000000'
+    },
+    btnContainer: {
+        dark: '#4F378B',
+        light: '#EADDFF'
     }
 
 }
