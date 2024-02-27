@@ -34,6 +34,7 @@ const ObjPropList = styled.div`
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      cursor: pointer;
     }
   }
 `;
@@ -49,7 +50,7 @@ const NodeContainer = styled.div`
   border-bottom-left-radius: 10px;
   font-family: "Source Code Pro", monospace;
   font-size: 22px;
-  cursor: grab;
+  cursor: default;
   .primitive-value {
     padding: 5px 10px;
   }
@@ -59,6 +60,7 @@ const NodeContainer = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     justify-self: flex-end;
+    cursor: pointer;
   }
   .heading {
     font-weight: 600;
@@ -145,13 +147,17 @@ function ObjectNode({ data, id }) {
                     {typeof item[1] === "object" ? (
                       <>
                         {Array.isArray(item[1]) ? (
-                          <DataArrayIcon
-                            style={{ color: color.icon[themeMode] }}
-                          />
+                          <Tooltip title="Array">
+                            <DataArrayIcon
+                              style={{ color: color.icon[themeMode] }}
+                            />
+                          </Tooltip>
                         ) : (
-                          <DataObjectIcon
-                            style={{ color: color.icon[themeMode] }}
-                          />
+                          <Tooltip title="Object">
+                            <DataObjectIcon
+                              style={{ color: color.icon[themeMode] }}
+                            />
+                          </Tooltip>
                         )}
                         <Handle
                           type="source"
