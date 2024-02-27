@@ -3,7 +3,7 @@ import { color } from '../../constants'
 
 const getPosition = (count, index, height = 0) => ({
     x: 1100 * index,
-    y: height * 23 + 230 * count,
+    y: height * 36 + 230 * count,
 });
 
 const getNode = (
@@ -47,7 +47,8 @@ export const generateGraph = (jsonObj, themeMode) => {
                         targetHandle: id,
                         style: {
                             stroke: color.edge[themeMode]
-                        }
+                        },
+                        id: v4(),
                     });
                 }
 
@@ -89,6 +90,7 @@ export const generateGraph = (jsonObj, themeMode) => {
                             style: {
                                 stroke: color.edge[themeMode],
                             },
+                            id: v4(),
                         });
                     }
                     if (idx > 0) {
@@ -101,6 +103,7 @@ export const generateGraph = (jsonObj, themeMode) => {
                             style: {
                                 stroke: color.edge[themeMode],
                             },
+                            id: v4(),
                         });
                     }
 

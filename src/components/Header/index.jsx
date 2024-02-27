@@ -1,12 +1,22 @@
-import { FormControlLabel, IconButton, Switch, Tooltip } from '@mui/material';
-import React from 'react'
-import styled from 'styled-components'
-import { useTheme } from '../../provider/useTheme';
-import { DarkModeOutlined, FirstPageOutlined, LastPageOutlined, LightModeOutlined } from '@mui/icons-material';
-import githubDark from '../../assets/github-mark-white.svg';
-import githubLight from '../../assets/github-mark.svg'
-import { color } from '../../constants';
-
+import {
+  FormControlLabel,
+  IconButton,
+  Link,
+  Switch,
+  Tooltip,
+} from "@mui/material";
+import React from "react";
+import styled from "styled-components";
+import { useTheme } from "../../provider/useTheme";
+import {
+  DarkModeOutlined,
+  FirstPageOutlined,
+  LastPageOutlined,
+  LightModeOutlined,
+} from "@mui/icons-material";
+import githubDark from "../../assets/github-mark-white.svg";
+import githubLight from "../../assets/github-mark.svg";
+import { color } from "../../constants";
 
 const HeaderContainer = styled.div`
   font-family: "Inter", sans-serif;
@@ -43,12 +53,12 @@ const HeaderContainer = styled.div`
   }
 `;
 
-function Header({ collapse, setCollapse}) {
-  const {themeMode, toggleThemeMode} = useTheme();
+function Header({ collapse, setCollapse }) {
+  const { themeMode, toggleThemeMode } = useTheme();
   return (
     <HeaderContainer themeMode={themeMode}>
       <span className="app-heading">
-        JSON <span className='heading-sub'>Visualizer</span>
+        JSON <span className="heading-sub">Visualizer</span>
       </span>
       <div className="button-container">
         <IconButton onClick={() => toggleThemeMode()}>
@@ -59,10 +69,16 @@ function Header({ collapse, setCollapse}) {
           )}
         </IconButton>
         <IconButton>
-          <img
-            style={{ width: 24, height: 24 }}
-            src={themeMode === "dark" ? githubLight : githubDark}
-          />
+          <Link
+            target="_blank"
+            href="https://github.com/supratimmalakar/json-visualizer"
+            rel="noreferrer"
+          >
+            <img
+              style={{ width: 24, height: 24 }}
+              src={themeMode === "dark" ? githubLight : githubDark}
+            />
+          </Link>
         </IconButton>
         <IconButton onClick={() => setCollapse((prev) => !prev)}>
           {collapse ? (
@@ -83,4 +99,4 @@ function Header({ collapse, setCollapse}) {
   );
 }
 
-export default Header
+export default Header;

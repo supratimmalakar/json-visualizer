@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import Editor, { DiffEditor, useMonaco, loader } from "@monaco-editor/react";
+import Editor from "@monaco-editor/react";
 import { useTheme } from "../../provider/useTheme";
 import { color } from "../../constants";
 import { Button, IconButton, TextField, Tooltip, Snackbar, Alert } from "@mui/material";
@@ -32,11 +32,22 @@ const EditorContainer = styled.div`
 `;
 
 function JsonEditor({ jsonObj, collapse, setJsonObj }) {
-  const [alert, setAlert] = useState(false);
-  const [message, setMessage] = useState('');
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    severity: "error",
+  });
   const { themeMode } = useTheme();
   const inputRef = useRef(null);
   const handleUploadJson = (e) => {
+    if (e.target.files[0].size > 50000) {
+      setAlert({
+        open: true,
+        message: "File size should be less than 50kb!",
+        severity: "error",
+      });
+      return;
+    }
     var fr = new FileReader();
 
     fr.onload = function (e) {
@@ -50,8 +61,11 @@ function JsonEditor({ jsonObj, collapse, setJsonObj }) {
 
     }
     catch (e) {
-      setAlert(true)
-      setMessage("File not valid!");
+      setAlert({
+        open: true,
+        message: "File not valid!",
+        severity: "error"
+      })
     }
   };
 
@@ -60,11 +74,17 @@ function JsonEditor({ jsonObj, collapse, setJsonObj }) {
       setJsonObj(JSON.parse(value));
     }
     else {
-      setAlert(true);
-      setMessage("JSON not valid!")
+      setAlert({
+        open: true,
+        message: "Invalid JSON!",
+        severity: "error"
+      })
     }
   }
 
+  const closeAlert = () => {
+    setAlert((prev) => ({ ...prev, open: false }));
+  }
 
   return (
     <EditorContainer isCollapsed={collapse} themeMode={themeMode}>
@@ -87,7 +107,7 @@ function JsonEditor({ jsonObj, collapse, setJsonObj }) {
         onChange={handleChange}
       />
       <div className="button-container-json-view">
-        <Tooltip title="Import JSON">
+        <Tooltip title="Import JSON(50kb)">
           <IconButton onClick={() => inputRef.current.click()} color="primary">
             <TextField style={{ display: "none" }} type="file" />
             <UploadFileOutlined />
@@ -97,13 +117,20 @@ function JsonEditor({ jsonObj, collapse, setJsonObj }) {
             onChange={handleUploadJson}
             ref={inputRef}
             accept=".json"
-            style={{ display: "none" }} // Make the file input element invisible
+            style={{ display: "none" }}
+            multiple={false}
           />
         </Tooltip>
         <Tooltip title="Copy Content">
           <IconButton
-            onClick={() =>
+            onClick={() =>{
               navigator.clipboard.writeText(JSON.stringify(jsonObj))
+              setAlert({
+                open: true,
+                message: "Copied to clipboard!",
+                severity: "success"
+              })
+            }
             }
             color="primary"
           >
@@ -112,17 +139,17 @@ function JsonEditor({ jsonObj, collapse, setJsonObj }) {
         </Tooltip>
       </div>
       <Snackbar
-        open={alert}
+        open={alert.open}
         autoHideDuration={3000}
-        onClose={() => setAlert(false)}
+        onClose={closeAlert}
       >
         <Alert
-          onClose={() => setAlert(false)}
-          severity="error"
+          onClose={closeAlert}
+          severity={alert.severity || "error"}
           variant="filled"
           sx={{ width: "100%" }}
         >
-          {message}
+          {alert.message}
         </Alert>
       </Snackbar>
     </EditorContainer>

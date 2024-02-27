@@ -16,8 +16,8 @@ import { color } from "../../constants";
 import { generateGraph } from "./helper";
 
 const VisualizerContainer = styled.div`
-  width: ${(props) => (props.isExpanded ? "100vw" : "calc(100vw - 300px)")};
-  transition: width 0.5s ease-in-out;
+  width: ${(props) => (props.isExpanded ? "100vw" : "calc(100vw - 400px)")};
+  transition: width 0.3s ease-in-out;
   height: calc(100vh - 81px);
 `;
 
